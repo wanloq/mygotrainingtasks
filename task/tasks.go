@@ -3,6 +3,7 @@ package task
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 /*
@@ -418,6 +419,7 @@ func D6E6() {
 	fmt.Println(names)
 }
 
+// DAY 7
 /*
 📌 Create a map called studentGrades that stores
 student names (keys) and their grades (values).
@@ -441,7 +443,7 @@ Update one of the capital cities.
 Delete one country from the map.
 Print the final map.
 */
-func D() {
+func D7E1() {
 	countries := map[string]string{
 		"Nigeria": "Abuja",
 		"USA":     "Washington",
@@ -458,4 +460,75 @@ func D() {
 	for country, capital := range countries {
 		fmt.Printf("%v --> %v\n", country, capital)
 	}
+}
+
+/*
+Task 2: Check for Key Existence
+Write a program that asks the user to enter a country name.
+Check if the country exists in the map from Task 1.
+If it exists, print the capital city; otherwise, display a message saying it is not found.
+*/
+func D7E2() {
+	countries := map[string]string{
+		"Nigeria": "Abuja",
+		"Usa":     "Washington",
+		"Germany": "Munich",
+		"China":   "Honkong",
+		"France":  "Paris",
+	}
+	countries["Germany"] = "Berlin"
+	var userInput string
+	fmt.Print("Please enter a country: ")
+	fmt.Scan(&userInput)
+	userInput = strings.TrimSpace(userInput)
+	userInput = strings.Title(strings.ToLower(userInput))
+	if capital, exists := countries[userInput]; exists {
+		fmt.Printf("Capital is : %v\n", capital)
+	} else {
+		fmt.Printf("%v Not Found\n", userInput)
+	}
+
+}
+
+/*
+Task 3: Iterating Over a Map
+Create a map that stores a list of students and their grades.
+Use a loop to print each student's name and grade.
+*/
+func D7E3() {
+	studentGrades := map[string]int{
+		"Alice": 76,
+		"Bob":   82,
+		"June":  78,
+		"Clive": 83,
+		"Phill": 71,
+	}
+	fmt.Println("Students grades table")
+	for student, grade := range studentGrades {
+		fmt.Printf("%v --> %v\n", student, grade)
+	}
+
+}
+
+/*
+Task 4: Word Frequency Counter
+Take a sentence as input from the user.
+Count how many times each word appears in the sentence.
+Store the word counts in a map and print the result.
+*/
+func CurrentTask() {
+	wordCount := map[string]int{}
+	sentenceString := strings.Title(strings.ToLower("The fox and the chicken are frinds but the chicken is afraid of the fox."))
+	words := strings.Fields(sentenceString)
+	for word := range words {
+		if word, exists := wordCount[word]; exists {
+			wordCount[word] = 1
+		}
+	}
+	fmt.Println(words)
+	fmt.Println(len(words))
+	// for sentence, count := range wordCount {
+	// 	fmt.Printf("%v --> %v\n", sentence, count)
+	// }
+
 }

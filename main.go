@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	task.D()
+	task.CurrentTask()
 }
