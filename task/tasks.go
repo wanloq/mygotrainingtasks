@@ -1,7 +1,9 @@
 package task
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"sort"
 	"strings"
 )
@@ -516,19 +518,52 @@ Take a sentence as input from the user.
 Count how many times each word appears in the sentence.
 Store the word counts in a map and print the result.
 */
-func CurrentTask() {
+func D7E4() {
 	wordCount := map[string]int{}
-	sentenceString := strings.Title(strings.ToLower("The fox and the chicken are frinds but the chicken is afraid of the fox."))
+	reader := bufio.NewReader(os.Stdin)
+	counter := 0
+	fmt.Print("Enter text here then press enter: ")
+	sentenceString, _ := reader.ReadString('\n')
+	sentenceString = strings.Title(strings.ToLower(strings.TrimSpace(sentenceString)))
 	words := strings.Fields(sentenceString)
-	for word := range words {
-		if word, exists := wordCount[word]; exists {
+	for _, word := range words {
+		if _, exists := wordCount[word]; exists {
+			wordCount[word] += 1
+		} else {
 			wordCount[word] = 1
 		}
 	}
-	fmt.Println(words)
-	fmt.Println(len(words))
-	// for sentence, count := range wordCount {
-	// 	fmt.Printf("%v --> %v\n", sentence, count)
-	// }
+	for word, count := range wordCount {
+		fmt.Printf("%v\t -> %v\n", word, count)
+		counter += count
+	}
+	fmt.Printf("Number of distinct words: %v\nTotal number of words: %v\n", len(wordCount), counter)
+}
 
+/*
+Task 5: Using Maps in Functions
+Write a function that takes a map of employee salaries (employee name → salary).
+The function should increase each employee's salary by 10% and return the updated map.
+Print the new salaries.
+*/
+func CurrentTask() {
+	wordCount := map[string]int{}
+	reader := bufio.NewReader(os.Stdin)
+	counter := 0
+	fmt.Print("Enter text here then press enter: ")
+	sentenceString, _ := reader.ReadString('\n')
+	sentenceString = strings.Title(strings.ToLower(strings.TrimSpace(sentenceString)))
+	words := strings.Fields(sentenceString)
+	for _, word := range words {
+		if _, exists := wordCount[word]; exists {
+			wordCount[word] += 1
+		} else {
+			wordCount[word] = 1
+		}
+	}
+	for word, count := range wordCount {
+		fmt.Printf("%v\t -> %v\n", word, count)
+		counter += count
+	}
+	fmt.Printf("Number of distinct words: %v\nTotal number of words: %v\n", len(wordCount), counter)
 }
