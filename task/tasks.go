@@ -322,11 +322,11 @@ Uses a pointer to modify one of the elements
 */
 func D5M5() {
 
-	numliblingsEssen := [5]int{3, 4, 2, 6, 1}
-	fmt.Println("liblingsEssen before:", numliblingsEssen)
-	ptr := &numliblingsEssen[3]
+	numarray := [5]int{3, 4, 2, 6, 1}
+	fmt.Println("liblingsEssen before:", numarray)
+	ptr := &numarray[3]
 	*ptr = 5
-	fmt.Println("liblingsEssen pointer after:", numliblingsEssen)
+	fmt.Println("liblingsEssen pointer after:", numarray)
 }
 
 /*
@@ -340,17 +340,17 @@ func D5M6(a, b *int) {
 
 // DAY 6
 /*
-Task 1: Working with liblingsEssens
-Create an liblingsEssen of 5 integers and assign values.
+Task 1: Working with array
+Create an array of 5 integers and assign values.
 Print the first and last elements.
-Change the third element and print the updated liblingsEssen.
+Change the third element and print the updated array.
 */
 func D6E1() {
-	liblingsEssen := [5]int{2, 4, 6, 8, 10}
-	fmt.Println("Original liblingsEssen: ", liblingsEssen)
-	fmt.Printf("First element: %v\nLast element: %v\n", liblingsEssen[0], liblingsEssen[4])
-	liblingsEssen[2] = 16
-	fmt.Println("Updated liblingsEssen: ", liblingsEssen)
+	lieblingsEssen := [5]int{2, 4, 6, 8, 10}
+	fmt.Println("Original liblingsEssen: ", lieblingsEssen)
+	fmt.Printf("First element: %v\nLast element: %v\n", lieblingsEssen[0], lieblingsEssen[4])
+	lieblingsEssen[2] = 16
+	fmt.Println("Updated liblingsEssen: ", lieblingsEssen)
 }
 
 /*
@@ -361,10 +361,10 @@ Print the length and capacity of the slice.
 */
 func D6E2() {
 
-	liblingsEssen := []string{"Pizza", "Burger", "Beans"}
-	fmt.Printf("Original Slice: %s\nOriginal Slice Length:%v\nOriginal Slice Capacity: %v\n", liblingsEssen, len(liblingsEssen), cap(liblingsEssen))
-	liblingsEssen = append(liblingsEssen, "Rice", "Akpu")
-	fmt.Printf("Updated Slice: %s\nUpdated Slice Length:%v\nUpdated Slice Capacity: %v\n", liblingsEssen, len(liblingsEssen), cap(liblingsEssen))
+	lieblingsEssen := []string{"Pizza", "Burger", "Beans"}
+	fmt.Printf("Original Slice: %s\nOriginal Slice Length:%v\nOriginal Slice Capacity: %v\n", lieblingsEssen, len(lieblingsEssen), cap(lieblingsEssen))
+	lieblingsEssen = append(lieblingsEssen, "Rice", "Akpu")
+	fmt.Printf("Updated Slice: %s\nUpdated Slice Length:%v\nUpdated Slice Capacity: %v\n", lieblingsEssen, len(lieblingsEssen), cap(lieblingsEssen))
 }
 
 /*
@@ -456,8 +456,8 @@ func D7E1() {
 	for country, capital := range countries {
 		fmt.Printf("%v --> %v\n", country, capital)
 	}
-	countries["Germany"] = "Berlin"
 	delete(countries, "France")
+	countries["China"] = "Beijing"
 	fmt.Println("Countries and their capitals")
 	for country, capital := range countries {
 		fmt.Printf("%v --> %v\n", country, capital)
@@ -527,11 +527,8 @@ func D7E4() {
 	sentenceString = strings.Title(strings.ToLower(strings.TrimSpace(sentenceString)))
 	words := strings.Fields(sentenceString)
 	for _, word := range words {
-		if _, exists := wordCount[word]; exists {
-			wordCount[word] += 1
-		} else {
-			wordCount[word] = 1
-		}
+		wordCount[word] += 1
+
 	}
 	for word, count := range wordCount {
 		fmt.Printf("%v\t -> %v\n", word, count)
@@ -546,24 +543,72 @@ Write a function that takes a map of employee salaries (employee name → salary
 The function should increase each employee's salary by 10% and return the updated map.
 Print the new salaries.
 */
-func CurrentTask() {
-	wordCount := map[string]int{}
-	reader := bufio.NewReader(os.Stdin)
-	counter := 0
-	fmt.Print("Enter text here then press enter: ")
-	sentenceString, _ := reader.ReadString('\n')
-	sentenceString = strings.Title(strings.ToLower(strings.TrimSpace(sentenceString)))
-	words := strings.Fields(sentenceString)
-	for _, word := range words {
-		if _, exists := wordCount[word]; exists {
-			wordCount[word] += 1
-		} else {
-			wordCount[word] = 1
+func D7E5(salaries map[string]int) map[string]int {
+	for name, salary := range salaries {
+		increase := int(0.1 * float64(salary))
+		salaries[name] = salary + increase
+	}
+	return salaries
+}
+
+/*
+Task 6: Reverse Lookup in a Map
+Given a map where keys are usernames and values are email addresses:
+Write a function that, given an email address, finds and returns the
+corresponding username.
+If the email is not found, return a message stating it was not found.
+*/
+func D7E6(input string) (key string) {
+	users := map[string]string{
+		"bob1":   "md@dd.co",
+		"gru32":  "gru32@dd.co",
+		"root43": "root@dd.co",
+	}
+	// reader := bufio.NewReader(os.Stdin)
+	// fmt.Print("Enter email address:\t")
+	// input, _ := reader.ReadString('\n')
+	input = strings.ToLower(strings.TrimSpace(input))
+	found := false
+	for k, v := range users {
+		if v == input {
+			key = "Username is: " + k
+			found = true
+			return
 		}
 	}
-	for word, count := range wordCount {
-		fmt.Printf("%v\t -> %v\n", word, count)
-		counter += count
+	if !found {
+		return input + " not found"
 	}
-	fmt.Printf("Number of distinct words: %v\nTotal number of words: %v\n", len(wordCount), counter)
+	return
+}
+
+/*
+Task 6: Reverse Lookup in a Map
+Given a map where keys are usernames and values are email addresses:
+Write a function that, given an email address, finds and returns the
+corresponding username.
+If the email is not found, return a message stating it was not found.
+*/
+func CurrentTask(input string) (key string) {
+	users := map[string]string{
+		"bob1":   "md@dd.co",
+		"gru32":  "gru32@dd.co",
+		"root43": "root@dd.co",
+	}
+	// reader := bufio.NewReader(os.Stdin)
+	// fmt.Print("Enter email address:\t")
+	// input, _ := reader.ReadString('\n')
+	input = strings.ToLower(strings.TrimSpace(input))
+	found := false
+	for k, v := range users {
+		if v == input {
+			key = "Username is: " + k
+			found = true
+			return
+		}
+	}
+	if !found {
+		return input + " not found"
+	}
+	return
 }
